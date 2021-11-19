@@ -1,9 +1,9 @@
-import { MouseEvent, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "@app/hooks";
+import { MouseEvent, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '@app/store';
 
-import { flagCell, revealArea, selectCell, selectCellState, unflagCell } from "./minesweeperSlice";
-import { CellId, CellState } from "./models";
-import { gameboardCell } from "./styles.css";
+import { CellId, CellState } from '../models';
+import { flagCell, revealArea, selectCell, selectCellState, unflagCell } from '../store';
+import { gameboardCell } from './styles.css';
 
 interface Props {
   id: CellId;

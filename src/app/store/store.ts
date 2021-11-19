@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import minesweeperReducer from '../features/minesweeper/minesweeperSlice';
+import minesweeperReducer from '@features/minesweeper/store';
 
 export const store = configureStore({
   reducer: {

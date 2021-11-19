@@ -1,4 +1,4 @@
-import { Minesweeper } from '@features/minesweeper/Minesweeper';
+import Minesweeper from '@features/minesweeper';
 
 export default function App() {
   return (

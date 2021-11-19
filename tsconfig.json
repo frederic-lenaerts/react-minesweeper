@@ -19,7 +19,7 @@
     "paths": {
       "@app/*": [ "src/app/*"],
       "@features/*":["src/features/*"],
-      "@utils/*":["src/utils/*"]
+      "@utils/*":["src/app/utils/*"]
   },
   },
   "include": ["./src"]

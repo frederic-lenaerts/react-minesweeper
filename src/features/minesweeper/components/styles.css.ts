@@ -1,6 +1,6 @@
 import { createTheme, style } from '@vanilla-extract/css';
 
-export const [themeClass, vars] = createTheme({
+export const [gameboardTheme, vars] = createTheme({
   columnCount: '9',
   cellSize: '2rem',
   gap: '0.25rem'
