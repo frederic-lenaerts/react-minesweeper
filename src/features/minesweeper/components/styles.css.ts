@@ -1,47 +1,127 @@
-import { createTheme, style } from '@vanilla-extract/css';
-import { calc } from '@vanilla-extract/css-utils';
+import { globalVars } from "@app/theme/global.css";
+import { createTheme, style } from "@vanilla-extract/css";
+import { calc } from "@vanilla-extract/css-utils";
+import { recipe } from "@vanilla-extract/recipes";
 
-export const [gameboardTheme, vars] = createTheme({
-  columnCount: '9',
-  cellSize: '3rem',
-  gap: '0.25rem'
+import { CellState } from "../models";
+
+export const [gameTheme, vars] = createTheme({
+  columnCount: "9",
+  cellSize: "3rem",
+  gap: "0.5rem",
+});
+
+export const gameLayout = style({
+  userSelect: "none",
+
+  position: "absolute",
+  left: "50%",
+  top: "50%",
+  WebkitTransform: "translate(-50%, -50%)",
+  transform: "translate(-50%, -50%)",
+
+  padding: calc.divide(vars.cellSize, 2),
+
+  boxShadow: "48px 48px 96px #bebebe, -48px -48px 96px #fff",
+  borderRadius: "2rem",
+});
+
+export const headerLayout = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+
+export const resetButton = style({
+  padding: "1rem",
+  borderRadius: ".5rem",
+  ...globalVars.neumorphism.flat,
+  ":focus-visible": {
+    ...globalVars.neumorphism.convex,
+  },
+  ":active": {
+    ...globalVars.neumorphism.concave,
+  },
+});
+
+export const divider = style({
+  borderRadius: ".5rem",
+  boxShadow: "inset 2px 2px 3px #cbcbcb, inset -2px -2px 3px #fff",
+  height: "1rem",
+  margin: "1rem 0",
 });
 
 export const gameboardLayout = style({
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
   gap: vars.gap,
-
-  padding: calc(vars.cellSize).divide(2).toString(),
-  width: `calc((${vars.columnCount} * ${vars.cellSize}) + (${vars.gap} * (${vars.columnCount} - 1)))`,
-
-  borderRadius: '50px',
-  background: 'linear-gradient(145deg, #cacaca, #f0f0f0)',
-  boxShadow: '20px 20px 60px #bebebe, -20px -20px 60px #ffffff',
+  width: calc.add(
+    calc.multiply(vars.columnCount, vars.cellSize),
+    calc.multiply(vars.gap, calc.subtract(vars.columnCount, 1))
+  ),
 });
 
-export const gameboardCell = style({
-  flex: `1 0 calc((100% - ((${vars.columnCount} - 1) * ${vars.gap})) / ${vars.columnCount})`,
+export const gameboardCell = recipe({
+  base: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
 
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+    width: vars.cellSize,
+    height: vars.cellSize,
 
-  width: vars.cellSize,
-  height: vars.cellSize,
-  fontSize: '1rem',
-
-  borderRadius: '50px',
-  background: 'linear-gradient(145deg, #cacaca, #f0f0f0)',
-  boxShadow: '20px 20px 60px #bebebe, -20px -20px 60px #ffffff',
-  fontWeight: 500,
-  fontFamily: 'Arial',
-
-  userSelect: 'none',
+    fontWeight: 500,
+  },
+  variants: {
+    state: {
+      [CellState.REVEALED]: {},
+      [CellState.MINE_REVEALED]: {},
+      [CellState.MINE_EXPLODED]: {
+        color: globalVars.color.danger,
+      },
+      [CellState.MINE_CORRECT_FLAGGED]: {
+        color: globalVars.color.success,
+      },
+      [CellState.MINE_INCORRECT_FLAGGED]: {
+        color: globalVars.color.danger,
+      },
+      [CellState.FLAGGED]: {
+        borderRadius: "50%",
+        ...globalVars.neumorphism.pressed,
+        ":focus-visible": {
+          ...globalVars.neumorphism.concave,
+        },
+      },
+      [CellState.HIDDEN]: {
+        borderRadius: "50%",
+        ...globalVars.neumorphism.flat,
+        ":focus-visible": {
+          ...globalVars.neumorphism.convex,
+        },
+        ":active": {
+          ...globalVars.neumorphism.concave,
+        },
+      },
+    },
+    count: {
+      0: {
+        color: globalVars.color.text,
+        opacity: 0.75,
+      },
+      1: { color: "#1098ad" },
+      2: { color: "#4263eb" },
+      3: { color: "#7048e8" },
+      4: { color: "#ae3ec9" },
+      5: { color: "#ae3ec9" },
+      6: { color: "#ae3ec9" },
+      7: { color: "#ae3ec9" },
+      8: { color: "#ae3ec9" },
+    },
+  },
 });
 
 export const iconContainer = style({
-  width: calc(vars.cellSize).divide(2).toString(),
-  height: calc(vars.cellSize).divide(2).toString(),
-})
+  width: calc.divide(vars.cellSize, 2),
+  height: calc.divide(vars.cellSize, 2),
+});

@@ -4,7 +4,7 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 import { selectBoardDimensions, selectCellIds } from '../store';
 import { GameBoardCell } from './GameBoardCell';
-import { gameboardLayout, gameboardTheme, vars } from './styles.css';
+import { gameboardLayout, vars } from './styles.css';
 
 export function GameBoard() {
   const { columns } = useAppSelector(selectBoardDimensions);
@@ -12,7 +12,7 @@ export function GameBoard() {
 
   return (
     <div
-      className={classNames(gameboardTheme, gameboardLayout)}
+      className={gameboardLayout}
       style={assignInlineVars({ [vars.columnCount]: `${columns}` })}
     >
       {cellIds.map((id) => (
