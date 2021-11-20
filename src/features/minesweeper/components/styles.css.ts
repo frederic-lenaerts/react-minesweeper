@@ -17,13 +17,15 @@ export const gameLayout = style({
   position: "absolute",
   left: "50%",
   top: "50%",
-  WebkitTransform: "translate(-50%, -50%)",
   transform: "translate(-50%, -50%)",
+
+  display: 'flex',
+  flexDirection: 'column-reverse',
 
   padding: calc.divide(vars.cellSize, 2),
 
-  boxShadow: "48px 48px 96px #bebebe, -48px -48px 96px #fff",
   borderRadius: "2rem",
+  boxShadow: "48px 48px 96px #bebebe, -48px -48px 96px #fff",
 });
 
 export const headerLayout = style({
@@ -48,7 +50,7 @@ export const divider = style({
   borderRadius: ".5rem",
   boxShadow: "inset 2px 2px 3px #cbcbcb, inset -2px -2px 3px #fff",
   height: "1rem",
-  margin: "1rem 0",
+  margin: ".5rem 0 1rem",
 });
 
 export const gameboardLayout = style({
@@ -56,9 +58,10 @@ export const gameboardLayout = style({
   flexDirection: "row",
   flexWrap: "wrap",
   gap: vars.gap,
+
   width: calc.add(
     calc.multiply(vars.columnCount, vars.cellSize),
-    calc.multiply(vars.gap, calc.subtract(vars.columnCount, 1))
+    calc(vars.columnCount).subtract(1).multiply(vars.gap).toString()
   ),
 });
 
@@ -70,8 +73,6 @@ export const gameboardCell = recipe({
 
     width: vars.cellSize,
     height: vars.cellSize,
-
-    fontWeight: 500,
   },
   variants: {
     state: {
